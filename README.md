@@ -10,9 +10,11 @@
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  在Gitee 平台建立 Git 仓库并 Clone 到本地
+2.  使用 VS Code 克隆仓库：
+打开 VS Code，按 Ctrl+Shift+P 调出命令面板，输入并选择 Git: Clone。
+粘贴 Gitee 仓库的克隆地址，选择本地存储路径，VS Code 会自动将仓库克隆到本地。
+3.  终端操作
 
 #### 使用说明
 
