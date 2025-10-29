@@ -1,14 +1,44 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+<!-- 这是页面头部 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我一个HTML页面</title>
+    <title>我的网页</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>欢迎来到我的网页</h1>
-    <p>这是我的一个HTML页面。</p>
-    <p>这是一个段落。段落中的文本会自动换行，并且段落之间会有一定的间距。</p>
-<p>这是第一行。<br>这是第二行。<br>这是第三行。</p>
+    <header>
+        <h1>欢迎来到我的网站</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+<!-- 这是主要内容区域 -->
+    <main>
+        <h2>这是一个二级标题</h2>
+<p>这是一个段落，包含<strong>粗体</strong>和<em>斜体</em>文本。</p>
+<a href="https://www.runoob.com" target="_blank">这是一个链接</a>
+<ul>
+    <li>项目1</li>
+    <li>项目2</li>
+    <li>项目3</li>
+</ul>
+        <section>
+            <h2>最新动态</h2>
+            <p>这是网站的主要内容区域。</p>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 我的网站. 保留所有权利。</p>
+    </footer>
+    
+    <script src="script.js"></script>
 </body>
 </html>
