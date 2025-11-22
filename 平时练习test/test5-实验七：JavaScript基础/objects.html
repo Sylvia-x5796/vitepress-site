@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对象</title>
+</head>
+<body>
+    <h1>对象</h1>
+    
+    <script>
+        // 创建对象
+        const person = {
+            name: "张三",
+            age: 20,
+            city: "北京",
+            hobbies: ["阅读", "音乐", "编程"],
+            sayHello: function() {
+                console.log("你好，我是" + this.name);
+            },
+            getAge: function() {
+                return this.age;
+            }
+        };
+        
+        // 访问对象属性
+        console.log("姓名：", person.name); // "张三"
+        console.log("年龄：", person["age"]); // 20
+        
+        // 调用对象方法
+        person.sayHello(); // "你好，我是张三"
+        console.log("获取年龄：", person.getAge()); // 20
+        
+        // 修改对象属性
+        person.age = 21;
+        console.log("修改后的年龄：", person.age); // 21
+        
+        // 添加新属性
+        person.job = "学生";
+        console.log("新增的职业属性：", person.job); // "学生"
+        
+        // 添加新方法
+        person.changeCity = function(newCity) {
+            this.city = newCity;
+        };
+        person.changeCity("上海");
+        console.log("修改后的城市：", person.city); // "上海"
+        
+        // 遍历对象的属性
+        console.log("遍历对象的属性：");
+        for (let key in person) {
+            if (person.hasOwnProperty(key)) {
+                console.log(key + ": " + person[key]);
+            }
+        }
+        
+        // 获取对象的所有属性名
+        const keys = Object.keys(person);
+        console.log("对象的属性名：", keys); // ["name", "age", "city", "hobbies", "sayHello", "getAge", "job", "changeCity"]
+        
+        // 获取对象的所有属性值
+        const values = Object.values(person);
+        console.log("对象的属性值：", values);
+        
+        // 获取对象的所有键值对
+        const entries = Object.entries(person);
+        console.log("对象的键值对：", entries);
+        
+        // 使用构造函数创建对象
+        function Car(brand, model, year) {
+            this.brand = brand;
+            this.model = model;
+            this.year = year;
+            this.displayInfo = function() {
+                console.log(this.year + " " + this.brand + " " + this.model);
+            };
+        }
+        
+        const car1 = new Car("丰田", "卡罗拉", 2020);
+        const car2 = new Car("本田", "思域", 2021);
+        
+        console.log("car1品牌：", car1.brand); // "丰田"
+        car1.displayInfo(); // "2020 丰田 卡罗拉"
+        car2.displayInfo(); // "2021 本田 思域"
+    </script>
+</body>
+</html>
