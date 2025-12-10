@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM遍历</title>
+</head>
+<body>
+    <h1>DOM遍历示例</h1>
+    
+    <div id="parent">
+        <!-- 这是一个注释 -->
+        <p>第一个段落</p>
+        <ul id="list">
+            <li>项目1</li>
+            <li>项目2</li>
+            <li>项目3</li>
+        </ul>
+        <p>第二个段落</p>
+    </div>
+    
+    <script>
+        // 获取元素
+        const parent = document.getElementById("parent");
+        const list = document.getElementById("list");
+        const firstParagraph = parent.querySelector("p");
+        
+        // 获取父节点
+        console.log("list的父节点:", list.parentNode);
+        
+        // 获取子节点（包括文本节点和注释节点）
+        console.log("parent的所有子节点:", parent.childNodes);
+        console.log("parent的子节点数量:", parent.childNodes.length);
+        
+        // 遍历所有子节点
+        parent.childNodes.forEach(function(node, index) {
+            console.log("parent的第" + index + "个子节点:", node, "节点类型:", node.nodeType);
+            // nodeType: 1=元素节点, 3=文本节点, 8=注释节点
+        });
+        
+        // 获取子元素节点
+        console.log("parent的所有子元素节点:", parent.children);
+        console.log("parent的子元素节点数量:", parent.children.length);
+        
+        // 遍历所有子元素节点
+        for (let i = 0; i < parent.children.length; i++) {
+            console.log("parent的第" + i + "个子元素节点:", parent.children[i]);
+        }
+        
+        // 获取第一个和最后一个子节点
+        console.log("parent的第一个子节点:", parent.firstChild);
+        console.log("parent的最后一个子节点:", parent.lastChild);
+        
+        // 获取第一个和最后一个子元素节点
+        console.log("parent的第一个子元素节点:", parent.firstElementChild);
+        console.log("parent的最后一个子元素节点:", parent.lastElementChild);
+        
+        // 获取兄弟节点
+        console.log("list的上一个兄弟节点:", list.previousSibling);
+        console.log("list的下一个兄弟节点:", list.nextSibling);
+        
+        // 获取兄弟元素节点
+        console.log("list的上一个兄弟元素节点:", list.previousElementSibling);
+        console.log("list的下一个兄弟元素节点:", list.nextElementSibling);
+        
+        // 递归遍历整个DOM子树
+        function traverseDOM(node, indent = 0) {
+            const spaces = " ".repeat(indent);
+            console.log(spaces + node.nodeName + " (" + node.nodeType + ")");
+            
+            if (node.nodeType === 3 && node.textContent.trim()) {
+                console.log(spaces + "  文本: " + node.textContent.trim());
+            }
+            
+            let child = node.firstChild;
+            while (child) {
+                traverseDOM(child, indent + 2);
+                child = child.nextSibling;
+            }
+        }
+        
+        console.log("递归遍历整个DOM子树:");
+        traverseDOM(parent);
+    </script>
+</body>
+</html>

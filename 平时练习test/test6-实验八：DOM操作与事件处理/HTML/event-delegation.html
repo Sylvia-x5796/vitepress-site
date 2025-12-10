@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件委托</title>
+    <style>
+        .container {
+            width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .item {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #f0f0f0;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .item:hover {
+            background-color: #e0e0e0;
+        }
+        .highlight {
+            background-color: #ffeb3b !important;
+        }
+        button {
+            padding: 8px 16px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            min-height: 100px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>事件委托示例</h1>
+    
+    <div class="container" id="item-container">
+        <div class="item" data-id="1">项目 1</div>
+        <div class="item" data-id="2">项目 2</div>
+        <div class="item" data-id="3">项目 3</div>
+        <div class="item" data-id="4">项目 4</div>
+        <div class="item" data-id="5">项目 5</div>
+    </div>
+    
+    <button id="add-item-button">添加新项目</button>
+    <button id="remove-item-button">移除最后一个项目</button>
+    
+    <div id="output"></div>
+    
+    <script>
+        // 获取元素
+        const itemContainer = document.getElementById("item-container");
+        const addItemButton = document.getElementById("add-item-button");
+        const removeItemButton = document.getElementById("remove-item-button");
+        const outputDiv = document.getElementById("output");
+        
+        // 项目计数器
+        let itemCount = 5;
+        
+        // 输出函数
+        function log(message) {
+            outputDiv.textContent += message + "\n";
+            console.log(message);
+        }
+        
+        // 重置输出
+        function resetOutput() {
+            outputDiv.textContent = "";
+        }
+        
+        // 为容器添加事件监听器（事件委托）
+        itemContainer.addEventListener("click", function(event) {
+            // 检查点击的元素是否是项目元素
+            if (event.target.classList.contains("item")) {
+                const item = event.target;
+                const itemId = item.getAttribute("data-id");
+                
+                resetOutput();
+                log("点击了项目 " + itemId + ": " + item.textContent);
+                
+                // 切换高亮状态
+                item.classList.toggle("highlight");
+                
+                // 可以根据项目ID执行不同的操作
+                switch (itemId) {
+                    case "1":
+                        log("执行项目1的特定操作");
+                        break;
+                    case "2":
+                        log("执行项目2的特定操作");
+                        break;
+                    // 可以添加更多的case
+                }
+            }
+        });
+        
+        // 为容器添加鼠标进入事件监听器
+        itemContainer.addEventListener("mouseenter", function(event) {
+            if (event.target.classList.contains("item")) {
+                event.target.style.border = "1px solid blue";
+            }
+        });
+        
+        // 为容器添加鼠标离开事件监听器
+        itemContainer.addEventListener("mouseleave", function(event) {
+            if (event.target.classList.contains("item")) {
+                event.target.style.border = "none";
+            }
+        });
+        
+        // 添加新项目按钮点击事件
+        addItemButton.addEventListener("click", function() {
+            itemCount++;
+            
+            // 创建新项目元素
+            const newItem = document.createElement("div");
+            newItem.className = "item";
+            newItem.setAttribute("data-id", itemCount);
+            newItem.textContent = "项目 " + itemCount;
+            
+            // 将新项目添加到容器中
+            itemContainer.appendChild(newItem);
+            
+            log("已添加新项目: 项目 " + itemCount);
+        });
+        
+        // 移除最后一个项目按钮点击事件
+        removeItemButton.addEventListener("click", function() {
+            const items = itemContainer.querySelectorAll(".item");
+            
+            if (items.length > 0) {
+                const lastItem = items[items.length - 1];
+                const lastItemId = lastItem.getAttribute("data-id");
+                
+                // 从容器中移除最后一个项目
+                itemContainer.removeChild(lastItem);
+                
+                log("已移除最后一个项目: 项目 " + lastItemId);
+                
+                // 如果被移除的是最后一个项目，减少计数器
+                if (parseInt(lastItemId) === itemCount) {
+                    itemCount--;
+                }
+            } else {
+                log("没有可移除的项目");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript自定义表单验证</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input.valid {
+            border-color: green;
+        }
+        input.invalid {
+            border-color: red;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+        .success-message {
+            color: green;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+        .validation-summary {
+            background-color: #ffebee;
+            border: 1px solid #f44336;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        .validation-summary h3 {
+            margin-top: 0;
+            color: #d32f2f;
+        }
+        .validation-summary ul {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript自定义表单验证</h1>
+    
+    <div class="validation-summary" id="validation-summary">
+        <h3>请修正以下错误：</h3>
+        <ul id="error-list"></ul>
+    </div>
+    
+    <form id="custom-validation-form">
+        <div class="form-group">
+            <label for="fullname">全名：</label>
+            <input type="text" id="fullname" name="fullname">
+            <div class="error-message" id="fullname-error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="id-card">身份证号：</label>
+            <input type="text" id="id-card" name="id-card" placeholder="请输入18位身份证号">
+            <div class="error-message" id="id-card-error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="credit-card">信用卡号：</label>
+            <input type="text" id="credit-card" name="credit-card" placeholder="请输入16位信用卡号">
+            <div class="error-message" id="credit-card-error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="custom-phone">手机号码：</label>
+            <input type="text" id="custom-phone" name="custom-phone" placeholder="请输入11位手机号码">
+            <div class="error-message" id="custom-phone-error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="custom-email">电子邮箱：</label>
+            <input type="text" id="custom-email" name="custom-email" placeholder="请输入电子邮箱">
+            <div class="error-message" id="custom-email-error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="custom-password">密码：</label>
+            <input type="password" id="custom-password" name="custom-password" placeholder="请输入密码">
+            <div class="error-message" id="custom-password-error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="password-strength">密码强度：</label>
+            <div id="password-strength"></div>
+        </div>
+        
+        <button type="submit">提交表单</button>
+    </form>
+    
+    <script>
+        // 获取表单元素
+        const form = document.getElementById("custom-validation-form");
+        const validationSummary = document.getElementById("validation-summary");
+        const errorList = document.getElementById("error-list");
+        
+        // 定义验证规则
+        const validationRules = {
+            fullname: {
+                required: true,
+                minLength: 2,
+                maxLength: 50,
+                pattern: /^[\u4e00-\u9fa5a-zA-Z\s]+$/,
+                message: "全名必须为2-50个字符，只能包含中文、英文和空格"
+            },
+            "id-card": {
+                required: true,
+                pattern: /^[1-9]\d{5}(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])\d{3}[\dXx]$/,
+                message: "请输入有效的18位身份证号"
+            },
+            "credit-card": {
+                required: true,
+                pattern: /^\d{16}$/,
+                customValidator: validateCreditCard,
+                message: "请输入有效的16位信用卡号"
+            },
+            "custom-phone": {
+                required: true,
+                pattern: /^1[3-9]\d{9}$/,
+                message: "请输入有效的11位手机号码"
+            },
+            "custom-email": {
+                required: true,
+                pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "请输入有效的电子邮箱地址"
+            },
+            "custom-password": {
+                required: true,
+                minLength: 8,
+                customValidator: validatePassword,
+                message: "密码至少8个字符，必须包含大小写字母、数字和特殊字符"
+            }
+        };
+        
+        // 表单提交事件处理
+        form.addEventListener("submit", function(event) {
+            // 阻止表单默认提交行为
+            event.preventDefault();
+            
+            // 验证表单
+            const errors = validateForm();
+            
+            if (errors.length === 0) {
+                alert("表单验证通过，可以提交！");
+                // 在实际应用中，这里可以提交表单数据到服务器
+                // form.submit();
+            } else {
+                // 显示验证错误信息
+                showValidationSummary(errors);
+            }
+        });
+        
+        // 验证表单
+        function validateForm() {
+            const errors = [];
+            
+            // 遍历所有验证规则
+            for (const fieldName in validationRules) {
+                const field = document.getElementById(fieldName);
+                const rule = validationRules[fieldName];
+                const value = field.value.trim();
+                
+                // 清除之前的验证状态
+                clearFieldValidation(fieldName);
+                
+                // 检查必填项
+                if (rule.required && !value) {
+                    errors.push({
+                        field: fieldName,
+                        message: `${getFieldLabel(fieldName)}为必填项`
+                    });
+                    setFieldValidation(fieldName, false, `${getFieldLabel(fieldName)}为必填项`);
+                    continue;
+                }
+                
+                // 如果有值，则进行其他验证
+                if (value) {
+                    // 检查最小长度
+                    if (rule.minLength && value.length < rule.minLength) {
+                        errors.push({
+                            field: fieldName,
+                            message: `${getFieldLabel(fieldName)}至少需要${rule.minLength}个字符`
+                        });
+                        setFieldValidation(fieldName, false, `${getFieldLabel(fieldName)}至少需要${rule.minLength}个字符`);
+                        continue;
+                    }
+                    
+                    // 检查最大长度
+                    if (rule.maxLength && value.length > rule.maxLength) {
+                        errors.push({
+                            field: fieldName,
+                            message: `${getFieldLabel(fieldName)}最多只能输入${rule.maxLength}个字符`
+                        });
+                        setFieldValidation(fieldName, false, `${getFieldLabel(fieldName)}最多只能输入${rule.maxLength}个字符`);
+                        continue;
+                    }
+                    
+                    // 检查正则表达式
+                    if (rule.pattern && !rule.pattern.test(value)) {
+                        errors.push({
+                            field: fieldName,
+                            message: rule.message || `${getFieldLabel(fieldName)}格式不正确`
+                        });
+                        setFieldValidation(fieldName, false, rule.message || `${getFieldLabel(fieldName)}格式不正确`);
+                        continue;
+                    }
+                    
+                    // 自定义验证器
+                    if (rule.customValidator && !rule.customValidator(value)) {
+                        errors.push({
+                            field: fieldName,
+                            message: rule.message || `${getFieldLabel(fieldName)}验证失败`
+                        });
+                        setFieldValidation(fieldName, false, rule.message || `${getFieldLabel(fieldName)}验证失败`);
+                        continue;
+                    }
+                    
+                    // 验证通过
+                    setFieldValidation(fieldName, true, "");
+                }
+            }
+            
+            return errors;
+        }
+        
+        // 显示验证摘要
+        function showValidationSummary(errors) {
+            // 清空错误列表
+            errorList.innerHTML = "";
+            
+            // 添加错误项
+            errors.forEach(function(error) {
+                const li = document.createElement("li");
+                li.textContent = error.message;
+                errorList.appendChild(li);
+            });
+            
+            // 显示验证摘要
+            validationSummary.style.display = "block";
+        }
+        
+        // 设置字段验证状态
+        function setFieldValidation(fieldName, isValid, message) {
+            const field = document.getElementById(fieldName);
+            const errorElement = document.getElementById(fieldName + "-error");
+            
+            if (isValid) {
+                field.classList.remove("invalid");
+                field.classList.add("valid");
+                
+                if (errorElement) {
+                    errorElement.textContent = "";
+                    errorElement.classList.remove("error-message");
+                    errorElement.classList.add("success-message");
+                    errorElement.textContent = "验证通过";
+                }
+            } else {
+                field.classList.remove("valid");
+                field.classList.add("invalid");
+                
+                if (errorElement) {
+                    errorElement.textContent = message;
+                    errorElement.classList.remove("success-message");
+                    errorElement.classList.add("error-message");
+                }
+            }
+        }
+        
+        // 清除字段验证状态
+        function clearFieldValidation(fieldName) {
+            const field = document.getElementById(fieldName);
+            const errorElement = document.getElementById(fieldName + "-error");
+            
+            field.classList.remove("valid", "invalid");
+            
+            if (errorElement) {
+                errorElement.textContent = "";
+                errorElement.classList.remove("success-message", "error-message");
+            }
+        }
+        
+        // 获取字段标签
+        function getFieldLabel(fieldName) {
+            const field = document.getElementById(fieldName);
+            const label = form.querySelector(`label[for="${fieldName}"]`);
+            return label ? label.textContent.replace("：", "") : fieldName;
+        }
+        
+        // 信用卡号验证（使用Luhn算法）
+        function validateCreditCard(cardNumber) {
+            // 移除所有非数字字符
+            const digits = cardNumber.replace(/\D/g, "");
+            
+            // 检查是否为16位数字
+            if (digits.length !== 16) {
+                return false;
+            }
+            
+            let sum = 0;
+            let isEven = false;
+            
+            // 从右到左遍历每个数字
+            for (let i = digits.length - 1; i >= 0; i--) {
+                let digit = parseInt(digits.charAt(i), 10);
+                
+                // 如果是偶数位置（从右数起），则数字乘以2
+                if (isEven) {
+                    digit *= 2;
+                    
+                    // 如果乘以2后的数字大于9，则将其各位数字相加
+                    if (digit > 9) {
+                        digit = (digit % 10) + 1;
+                    }
+                }
+                
+                sum += digit;
+                isEven = !isEven;
+            }
+            
+            // 如果总和是10的倍数，则信用卡号有效
+            return sum % 10 === 0;
+        }
+        
+        // 密码验证
+        function validatePassword(password) {
+            // 至少8个字符
+            if (password.length < 8) {
+                return false;
+            }
+            
+            // 必须包含至少一个大写字母
+            if (!/[A-Z]/.test(password)) {
+                return false;
+            }
+            
+            // 必须包含至少一个小写字母
+            if (!/[a-z]/.test(password)) {
+                return false;
+            }
+            
+            // 必须包含至少一个数字
+            if (!/[0-9]/.test(password)) {
+                return false;
+            }
+            
+            // 必须包含至少一个特殊字符
+            if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // 密码强度检测
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            let feedback = [];
+            
+            // 长度检查
+            if (password.length >= 8) {
+                strength += 1;
+            } else {
+                feedback.push("密码长度至少8个字符");
+            }
+            
+            // 包含大写字母
+            if (/[A-Z]/.test(password)) {
+                strength += 1;
+            } else {
+                feedback.push("包含大写字母");
+            }
+            
+            // 包含小写字母
+            if (/[a-z]/.test(password)) {
+                strength += 1;
+            } else {
+                feedback.push("包含小写字母");
+            }
+            
+            // 包含数字
+            if (/[0-9]/.test(password)) {
+                strength += 1;
+            } else {
+                feedback.push("包含数字");
+            }
+            
+            // 包含特殊字符
+            if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+                strength += 1;
+            } else {
+                feedback.push("包含特殊字符");
+            }
+            
+            return { strength, feedback };
+        }
+        
+        // 为密码输入框添加输入事件监听器
+        const passwordField = document.getElementById("custom-password");
+        const passwordStrengthDiv = document.getElementById("password-strength");
+        
+        passwordField.addEventListener("input", function() {
+            const password = this.value;
+            const result = checkPasswordStrength(password);
+            
+            // 清除之前的强度显示
+            passwordStrengthDiv.innerHTML = "";
+            
+            if (password.length > 0) {
+                // 创建强度条
+                const strengthBar = document.createElement("div");
+                strengthBar.style.width = "100%";
+                strengthBar.style.height = "10px";
+                strengthBar.style.backgroundColor = "#ddd";
+                strengthBar.style.borderRadius = "5px";
+                strengthBar.style.overflow = "hidden";
+                strengthBar.style.marginTop = "5px";
+                
+                const strengthFill = document.createElement("div");
+                strengthFill.style.height = "100%";
+                strengthFill.style.width = (result.strength / 5 * 100) + "%";
+                
+                // 根据强度设置颜色
+                if (result.strength <= 2) {
+                    strengthFill.style.backgroundColor = "red";
+                } else if (result.strength <= 3) {
+                    strengthFill.style.backgroundColor = "orange";
+                } else {
+                    strengthFill.style.backgroundColor = "green";
+                }
+                
+                strengthBar.appendChild(strengthFill);
+                passwordStrengthDiv.appendChild(strengthBar);
+                
+                // 添加强度文本
+                const strengthText = document.createElement("div");
+                strengthText.style.marginTop = "5px";
+                strengthText.style.fontSize = "0.8em";
+                
+                if (result.strength <= 2) {
+                    strengthText.textContent = "密码强度：弱";
+                    strengthText.style.color = "red";
+                } else if (result.strength <= 3) {
+                    strengthText.textContent = "密码强度：中";
+                    strengthText.style.color = "orange";
+                } else {
+                    strengthText.textContent = "密码强度：强";
+                    strengthText.style.color = "green";
+                }
+                
+                passwordStrengthDiv.appendChild(strengthText);
+                
+                // 添加改进建议
+                if (result.feedback.length > 0) {
+                    const feedbackText = document.createElement("div");
+                    feedbackText.style.marginTop = "5px";
+                    feedbackText.style.fontSize = "0.8em";
+                    feedbackText.style.color = "#666";
+                    feedbackText.textContent = "建议：" + result.feedback.join("、");
+                    passwordStrengthDiv.appendChild(feedbackText);
+                }
+            }
+        });
+        
+        // 为每个输入框添加输入事件监听器，实时验证
+        const inputs = form.querySelectorAll("input");
+        inputs.forEach(function(input) {
+            input.addEventListener("blur", function() {
+                // 只验证当前字段
+                const fieldName = this.id;
+                const rule = validationRules[fieldName];
+                const value = this.value.trim();
+                
+                if (!value && rule.required) {
+                    setFieldValidation(fieldName, false, `${getFieldLabel(fieldName)}为必填项`);
+                } else if (value) {
+                    // 执行验证
+                    let isValid = true;
+                    let message = "";
+                    
+                    // 检查最小长度
+                    if (rule.minLength && value.length < rule.minLength) {
+                        isValid = false;
+                        message = `${getFieldLabel(fieldName)}至少需要${rule.minLength}个字符`;
+                    }
+                    
+                    // 检查最大长度
+                    if (isValid && rule.maxLength && value.length > rule.maxLength) {
+                        isValid = false;
+                        message = `${getFieldLabel(fieldName)}最多只能输入${rule.maxLength}个字符`;
+                    }
+                    
+                    // 检查正则表达式
+                    if (isValid && rule.pattern && !rule.pattern.test(value)) {
+                        isValid = false;
+                        message = rule.message || `${getFieldLabel(fieldName)}格式不正确`;
+                    }
+                    
+                    // 自定义验证器
+                    if (isValid && rule.customValidator && !rule.customValidator(value)) {
+                        isValid = false;
+                        message = rule.message || `${getFieldLabel(fieldName)}验证失败`;
+                    }
+                    
+                    setFieldValidation(fieldName, isValid, message);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

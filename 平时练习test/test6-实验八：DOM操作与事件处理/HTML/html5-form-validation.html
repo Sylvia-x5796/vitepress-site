@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5内置表单验证</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>HTML5内置表单验证</h1>
+    
+    <form id="validation-form" novalidate>
+        <div class="form-group">
+            <label for="username">用户名：</label>
+            <input type="text" id="username" name="username" required minlength="3" maxlength="20" pattern="[a-zA-Z0-9_]+" title="只能包含字母、数字和下划线">
+            <div class="error-message" id="username-error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">电子邮箱：</label>
+            <input type="email" id="email" name="email" required>
+            <div class="error-message" id="email-error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="age">年龄：</label>
+            <input type="number" id="age" name="age" min="18" max="120" required>
+            <div class="error-message" id="age-error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="website">个人网站：</label>
+            <input type="url" id="website" name="website">
+            <div class="error-message" id="website-error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">密码：</label>
+            <input type="password" id="password" name="password" required minlength="8">
+            <div class="error-message" id="password-error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="confirm-password">确认密码：</label>
+            <input type="password" id="confirm-password" name="confirm-password" required>
+            <div class="error-message" id="confirm-password-error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="birthday">生日：</label>
+            <input type="date" id="birthday" name="birthday" required>
+            <div class="error-message" id="birthday-error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="phone">电话号码：</label>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{11}" title="请输入11位手机号码">
+            <div class="error-message" id="phone-error"></div>
+        </div>
+        
+        <button type="submit">提交表单</button>
+    </form>
+    
+    <script>
+        // 获取表单元素
+        const form = document.getElementById("validation-form");
+        
+        // 表单提交事件处理
+        form.addEventListener("submit", function(event) {
+            // 阻止表单默认提交行为
+            event.preventDefault();
+            
+            // 验证表单
+            if (form.checkValidity()) {
+                // 验证密码和确认密码是否一致
+                const password = document.getElementById("password").value;
+                const confirmPassword = document.getElementById("confirm-password").value;
+                
+                if (password !== confirmPassword) {
+                    showError("confirm-password", "两次输入的密码不一致");
+                    return;
+                }
+                
+                alert("表单验证通过，可以提交！");
+                // 在实际应用中，这里可以提交表单数据到服务器
+                // form.submit();
+            } else {
+                // 显示验证错误信息
+                showValidationErrors();
+            }
+        });
+        
+        // 显示验证错误信息
+        function showValidationErrors() {
+            // 清除所有错误信息
+            clearAllErrors();
+            
+            // 获取所有表单控件
+            const inputs = form.querySelectorAll("input");
+            
+            // 遍历每个表单控件
+            inputs.forEach(function(input) {
+                // 检查控件是否有效
+                if (!input.validity.valid) {
+                    // 获取错误信息
+                    const errorMessage = getErrorMessage(input);
+                    
+                    // 显示错误信息
+                    showError(input.id, errorMessage);
+                }
+            });
+        }
+        
+        // 获取错误信息
+        function getErrorMessage(input) {
+            // 根据不同的验证错误类型返回相应的错误信息
+            if (input.validity.valueMissing) {
+                return "此字段为必填项";
+            } else if (input.validity.typeMismatch) {
+                if (input.type === "email") {
+                    return "请输入有效的电子邮箱地址";
+                } else if (input.type === "url") {
+                    return "请输入有效的网址";
+                } else if (input.type === "tel") {
+                    return "请输入有效的电话号码";
+                }
+            } else if (input.validity.patternMismatch) {
+                return input.title || "输入格式不正确";
+            } else if (input.validity.tooShort) {
+                return `至少需要输入 ${input.minLength} 个字符`;
+            } else if (input.validity.tooLong) {
+                return `最多只能输入 ${input.maxLength} 个字符`;
+            } else if (input.validity.rangeUnderflow) {
+                return `值不能小于 ${input.min}`;
+            } else if (input.validity.rangeOverflow) {
+                return `值不能大于 ${input.max}`;
+            } else if (input.validity.stepMismatch) {
+                return "请输入有效的步进值";
+            } else if (input.validity.badInput) {
+                return "请输入有效的数值";
+            }
+            
+            return "输入值无效";
+        }
+        
+        // 显示错误信息
+        function showError(inputId, message) {
+            const errorElement = document.getElementById(inputId + "-error");
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.style.display = "block";
+            }
+        }
+        
+        // 清除所有错误信息
+        function clearAllErrors() {
+            const errorElements = form.querySelectorAll(".error-message");
+            errorElements.forEach(function(element) {
+                element.textContent = "";
+                element.style.display = "none";
+            });
+        }
+        
+        // 为每个输入框添加输入事件监听器，实时清除错误信息
+        const inputs = form.querySelectorAll("input");
+        inputs.forEach(function(input) {
+            input.addEventListener("input", function() {
+                if (input.validity.valid) {
+                    const errorElement = document.getElementById(input.id + "-error");
+                    if (errorElement) {
+                        errorElement.textContent = "";
+                        errorElement.style.display = "none";
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

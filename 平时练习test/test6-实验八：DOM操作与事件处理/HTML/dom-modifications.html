@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM修改</title>
+    <style>
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+        .border {
+            border: 2px solid red;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="main-title">DOM修改示例</h1>
+    
+    <div class="container">
+        <p id="first-paragraph" class="content">这是第一个段落。</p>
+        <p class="content">这是第二个段落。</p>
+        <img id="sample-image" src="" alt="示例图片">
+    </div>
+    
+    <script>
+        // 获取元素
+        const mainTitle = document.getElementById("main-title");
+        const firstParagraph = document.getElementById("first-paragraph");
+        const contentElements = document.getElementsByClassName("content");
+        const sampleImage = document.getElementById("sample-image");
+        
+        // 修改元素的文本内容
+        mainTitle.textContent = "DOM修改示例 - 已更新";
+        
+        // 修改元素的HTML内容
+        firstParagraph.innerHTML = "这是一个<span class='highlight'>包含HTML标签</span>的段落。";
+        
+        // 修改元素的行内样式
+        mainTitle.style.color = "blue";
+        mainTitle.style.fontSize = "28px";
+        mainTitle.style.textAlign = "center";
+        
+        // 使用classList添加CSS类
+        contentElements[1].classList.add("highlight");
+        
+        // 使用classList切换CSS类
+        setInterval(function() {
+            firstParagraph.classList.toggle("border");
+        }, 1000);
+        
+        // 检查元素是否包含指定的CSS类
+        console.log("firstParagraph包含highlight类吗?", firstParagraph.classList.contains("highlight"));
+        console.log("contentElements[1]包含highlight类吗?", contentElements[1].classList.contains("highlight"));
+        
+        // 设置元素的属性
+        sampleImage.setAttribute("src", "https://via.placeholder.com/300x200");
+        sampleImage.setAttribute("alt", "300x200的占位图片");
+        sampleImage.setAttribute("title", "示例图片");
+        
+        // 获取元素的属性
+        const imageSrc = sampleImage.getAttribute("src");
+        const imageAlt = sampleImage.getAttribute("alt");
+        console.log("图片的src属性:", imageSrc);
+        console.log("图片的alt属性:", imageAlt);
+        
+        // 移除元素的属性
+        setTimeout(function() {
+            sampleImage.removeAttribute("title");
+            console.log("移除title属性后，图片的title属性:", sampleImage.getAttribute("title"));
+        }, 3000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM选择器</title>
+</head>
+<body>
+    <h1 id="main-title">DOM选择器示例</h1>
+    
+    <div class="container">
+        <p class="content">这是第一个段落。</p>
+        <p class="content">这是第二个段落。</p>
+        <ul id="list">
+            <li>项目1</li>
+            <li>项目2</li>
+            <li>项目3</li>
+        </ul>
+    </div>
+    
+    <script>
+        // 使用getElementById获取元素
+        const mainTitle = document.getElementById("main-title");
+        console.log("getElementById:", mainTitle);
+        
+        // 使用getElementsByClassName获取元素集合
+        const contentElements = document.getElementsByClassName("content");
+        console.log("getElementsByClassName:", contentElements);
+        console.log("contentElements的长度:", contentElements.length);
+        
+        // 遍历getElementsByClassName返回的HTMLCollection
+        for (let i = 0; i < contentElements.length; i++) {
+            console.log("contentElements[" + i + "]:", contentElements[i]);
+        }
+        
+        // 使用getElementsByTagName获取元素集合
+        const pElements = document.getElementsByTagName("p");
+        console.log("getElementsByTagName:", pElements);
+        console.log("pElements的长度:", pElements.length);
+        
+        // 使用querySelector获取第一个匹配的元素
+        const firstContent = document.querySelector(".content");
+        console.log("querySelector:", firstContent);
+        
+        // 使用querySelectorAll获取所有匹配的元素集合
+        const allContent = document.querySelectorAll(".content");
+        console.log("querySelectorAll:", allContent);
+        console.log("allContent的长度:", allContent.length);
+        
+        // 遍历querySelectorAll返回的NodeList
+        allContent.forEach(function(element, index) {
+            console.log("allContent[" + index + "]:", element);
+        });
+        
+        // 使用更复杂的CSS选择器
+        const firstListItem = document.querySelector("#list li:first-child");
+        console.log("firstListItem:", firstListItem);
+        
+        const evenListItems = document.querySelectorAll("#list li:nth-child(even)");
+        console.log("evenListItems:", evenListItems);
+    </script>
+</body>
+</html>

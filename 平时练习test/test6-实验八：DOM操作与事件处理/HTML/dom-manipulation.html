@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM操作</title>
+    <style>
+        .new-element {
+            background-color: lightblue;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .replaced-element {
+            background-color: lightgreen;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>DOM操作示例</h1>
+    
+    <div id="container">
+        <p id="paragraph1">这是第一个段落。</p>
+        <p id="paragraph2">这是第二个段落。</p>
+    </div>
+    
+    <button id="add-button">添加元素</button>
+    <button id="delete-button">删除元素</button>
+    <button id="replace-button">替换元素</button>
+    
+    <script>
+        // 获取元素
+        const container = document.getElementById("container");
+        const paragraph1 = document.getElementById("paragraph1");
+        const paragraph2 = document.getElementById("paragraph2");
+        const addButton = document.getElementById("add-button");
+        const deleteButton = document.getElementById("delete-button");
+        const replaceButton = document.getElementById("replace-button");
+        
+        // 添加元素按钮点击事件
+        addButton.addEventListener("click", function() {
+            // 创建新的div元素
+            const newDiv = document.createElement("div");
+            newDiv.className = "new-element";
+            
+            // 创建新的文本节点
+            const newText = document.createTextNode("这是一个新创建的元素。");
+            
+            // 将文本节点添加到div元素中
+            newDiv.appendChild(newText);
+            
+            // 将div元素添加到container的末尾
+            container.appendChild(newDiv);
+            
+            console.log("已添加新元素");
+        });
+        
+        // 删除元素按钮点击事件
+        deleteButton.addEventListener("click", function() {
+            // 检查paragraph2是否存在
+            if (paragraph2 && paragraph2.parentNode) {
+                // 从父元素中删除paragraph2
+                container.removeChild(paragraph2);
+                console.log("已删除元素");
+            } else {
+                console.log("要删除的元素不存在");
+            }
+        });
+        
+        // 替换元素按钮点击事件
+        replaceButton.addEventListener("click", function() {
+            // 检查paragraph1是否存在
+            if (paragraph1 && paragraph1.parentNode) {
+                // 创建新的替换元素
+                const replacementParagraph = document.createElement("p");
+                replacementParagraph.className = "replaced-element";
+                replacementParagraph.textContent = "这是用来替换的元素。";
+                
+                // 用新元素替换旧元素
+                container.replaceChild(replacementParagraph, paragraph1);
+                console.log("已替换元素");
+            } else {
+                console.log("要替换的元素不存在");
+            }
+        });
+        
+        // 在指定位置插入元素
+        setTimeout(function() {
+            const insertedParagraph = document.createElement("p");
+            insertedParagraph.textContent = "这是在指定位置插入的元素。";
+            insertedParagraph.style.fontStyle = "italic";
+            
+            // 在paragraph1和paragraph2之间插入新元素
+            container.insertBefore(insertedParagraph, paragraph2);
+            console.log("已在指定位置插入元素");
+        }, 2000);
+    </script>
+</body>
+</html>
