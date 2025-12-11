@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>控制语句</title>
+</head>
+<body>
+    <h1>控制语句</h1>
+    
+    <script>
+        // if语句
+        let score = 85;
+        if (score >= 90) {
+            console.log("优秀");
+        } else if (score >= 80) {
+            console.log("良好");
+        } else if (score >= 60) {
+            console.log("及格");
+        } else {
+            console.log("不及格");
+        }
+        
+        // switch语句
+        let day = 3;
+        switch (day) {
+            case 1:
+                console.log("星期一");
+                break;
+            case 2:
+                console.log("星期二");
+                break;
+            case 3:
+                console.log("星期三");
+                break;
+            case 4:
+                console.log("星期四");
+                break;
+            case 5:
+                console.log("星期五");
+                break;
+            case 6:
+                console.log("星期六");
+                break;
+            case 7:
+                console.log("星期日");
+                break;
+            default:
+                console.log("无效的天数");
+        }
+        
+        // for循环
+        console.log("for循环输出1到5：");
+        for (let i = 1; i <= 5; i++) {
+            console.log(i);
+        }
+        
+        // while循环
+        console.log("while循环输出1到5：");
+        let j = 1;
+        while (j <= 5) {
+            console.log(j);
+            j++;
+        }
+        
+        // do-while循环
+        console.log("do-while循环输出1到5：");
+        let k = 1;
+        do {
+            console.log(k);
+            k++;
+        } while (k <= 5);
+        
+        // for-in循环遍历对象
+        const person = {name: "张三", age: 20, city: "北京"};
+        console.log("for-in循环遍历对象：");
+        for (let key in person) {
+            console.log(key + ": " + person[key]);
+        }
+        
+        // for-of循环遍历数组
+        const numbers = [1, 2, 3, 4, 5];
+        console.log("for-of循环遍历数组：");
+        for (let number of numbers) {
+            console.log(number);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM操作</title>
+    <style>
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="main-title">DOM操作示例</h1>
+    
+    <div class="container">
+        <p class="content">这是一个段落。</p>
+        <p class="content">这是另一个段落。</p>
+        <ul id="list">
+            <li>项目1</li>
+            <li>项目2</li>
+            <li>项目3</li>
+        </ul>
+    </div>
+    
+    <div id="output"></div>
+    
+    <script>
+        // 获取元素
+        const mainTitle = document.getElementById("main-title");
+        const contentParagraphs = document.getElementsByClassName("content");
+        const listItems = document.getElementsByTagName("li");
+        const container = document.querySelector(".container");
+        const firstContent = document.querySelector(".content");
+        const allContent = document.querySelectorAll(".content");
+        
+        // 修改元素内容
+        mainTitle.textContent = "DOM操作示例 - 已更新";
+        contentParagraphs[0].innerHTML = "这是一个<span class='highlight'>更新后的</span>段落。";
+        
+        // 修改元素样式
+        mainTitle.style.color = "blue";
+        mainTitle.style.fontSize = "24px";
+        
+        // 添加/移除CSS类
+        contentParagraphs[1].classList.add("highlight");
+        
+        // 设置/获取属性
+        mainTitle.setAttribute("title", "这是页面标题");
+        console.log("mainTitle的title属性：", mainTitle.getAttribute("title"));
+        
+        // 创建新元素
+        const newParagraph = document.createElement("p");
+        newParagraph.textContent = "这是一个新创建的段落。";
+        newParagraph.className = "content highlight";
+        
+        // 插入元素
+        container.appendChild(newParagraph);
+        
+        const newListItem = document.createElement("li");
+        newListItem.textContent = "项目4";
+        const list = document.getElementById("list");
+        list.insertBefore(newListItem, listItems[2]);
+        
+        // 删除元素
+        const itemToRemove = listItems[0];
+        list.removeChild(itemToRemove);
+        
+        // 替换元素
+        const oldParagraph = contentParagraphs[0];
+        const replacementParagraph = document.createElement("p");
+        replacementParagraph.textContent = "这是用来替换的段落。";
+        replacementParagraph.className = "content";
+        container.replaceChild(replacementParagraph, oldParagraph);
+        
+        // 输出所有内容元素的数量
+        const outputDiv = document.getElementById("output");
+        outputDiv.textContent = "内容元素的数量：" + document.querySelectorAll(".content").length;
+    </script>
+</body>
+</html>

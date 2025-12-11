@@ -1,4 +1,4 @@
-# VitePress 个人网站
+# VitePress 个人网站 - 肖息
 
 基于 VitePress 构建的现代化个人技术博客网站。
 
@@ -22,7 +22,7 @@
 
 ```bash
 # 克隆项目
-git clone <your-repo-url>
+git clone https://gitee.com/sylviaxiao/xiao-xis-personal-homepage.git
 cd vitepress-site
 
 # 安装依赖
@@ -37,7 +37,7 @@ npm run docs:dev
 ### 开发
 
 ```bash
-# 启动开发服务器
+# 启动开发服务器 (访问 http://localhost:5173/)
 npm run docs:dev
 ```
 
@@ -58,7 +58,7 @@ npm run docs:preview
 ### 部署
 
 ```bash
-# 手动部署到 GitHub Pages
+# 手动部署到 Gitee Pages
 npm run deploy
 
 # 构建并部署（一键部署）
@@ -80,32 +80,16 @@ npm run build:deploy
 └── README.md             # 项目说明
 ```
 
-## 📝 写作
+## 🚀 部署到 Gitee Pages
 
-### 添加博客文章
+### 方式一：一键部署（推荐）
 
-1. 在 `docs/blog/` 目录下创建新的 `.md` 文件
-2. 添加 frontmatter 元数据：
-
-```yaml
----
-title: 文章标题
-description: 文章描述
-date: 2025-01-15
-tags:
-  - 标签1
-  - 标签2
----
+```bash
+# 构建并部署
+npm run build:deploy
 ```
 
-### 添加文档页面
-
-1. 在 `docs/docs/` 目录下创建相应的 `.md` 文件
-2. 在 `docs/.vitepress/config.mts` 中更新侧边栏配置
-
-## 🚀 部署
-
-### 方式一：Gitee Pages 部署（推荐）
+### 方式二：手动部署
 
 1. **推送代码到 Gitee**
    ```bash
@@ -115,7 +99,7 @@ tags:
    ```
 
 2. **启用 Gitee Pages**
-   - 进入 Gitee 仓库页面
+   - 进入 [Gitee 仓库页面](https://gitee.com/sylviaxiao/xiao-xis-personal-homepage)
    - 点击 "服务" → "Gitee Pages"
    - 选择部署分支为 `gh-pages`
    - 点击 "启动" 或 "更新"
@@ -123,49 +107,20 @@ tags:
 3. **访问网站**
    - 部署完成后，网站将在 `https://sylviaxiao.gitee.io/xiao-xis-personal-homepage` 可访问
 
-### 方式二：手动部署到 Gitee Pages
-
-1. **使用 gh-pages 工具部署**
-   ```bash
-   # 构建并部署
-   npm run build:deploy
-   
-   # 或分步执行
-   npm run docs:build
-   npm run deploy
-   ```
-
-2. **首次部署设置**
-   ```bash
-   # 确保已连接到 Gitee 仓库
-   git remote add origin https://gitee.com/sylviaxiao/xiao-xis-personal-homepage.git
-   
-   # 推送主分支
-   git push -u origin master
-   ```
-
-3. **部署后更新 Gitee Pages**
-   - 每次部署后需要手动在 Gitee 页面点击 "更新" 按钮
-   - 或者开通 Gitee Pages Pro 服务实现自动更新
-
-### 方式三：其他平台部署
-
-1. **Vercel 部署**
-   - 导入 Gitee 仓库到 Vercel
-   - 设置构建命令：`npm run docs:build`
-   - 设置输出目录：`docs/.vitepress/dist`
-
-2. **Netlify 部署**
-   - 连接 Gitee 仓库到 Netlify
-   - 配置构建设置
-   - 自动部署
-
 ### 部署注意事项
 
 - **Gitee Pages 限制**: 免费版需要手动更新，Pro 版支持自动更新
 - **分支管理**: 源码在 `master` 分支，构建结果推送到 `gh-pages` 分支
 - **静态资源**: 确保所有图片和资源文件都放在 `docs/public/` 目录下
-- **访问地址**: `https://sylviaxiao.gitee.io/xiao-xis-personal-homepage`
+- **开发服务器**: 本地开发访问 `http://localhost:5173/`
+
+## 👤 作者信息
+
+- **姓名**: 肖息
+- **学号**: 222023321062059
+- **学校**: 西南大学
+- **邮箱**: 410676208@qq.com
+- **Gitee**: https://gitee.com/sylviaxiao
 
 ## 📄 许可证
 
@@ -174,8 +129,3 @@ MIT License
 ## 🤝 贡献
 
 欢迎提交 Issue 和 Pull Request！
-
-## 📧 联系
-
-- 邮箱：410676208@qq.com
-- GitHub：[你的GitHub用户名]
