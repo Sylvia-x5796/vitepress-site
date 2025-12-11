@@ -105,27 +105,27 @@ tags:
 
 ## 🚀 部署
 
-### 方式一：GitHub Actions 自动部署（推荐）
+### 方式一：Gitee Pages 部署（推荐）
 
-1. **启用 GitHub Pages**
-   - 进入 GitHub 仓库设置页面
-   - 找到 "Pages" 选项
-   - Source 选择 "GitHub Actions"
-
-2. **推送代码触发部署**
+1. **推送代码到 Gitee**
    ```bash
    git add .
    git commit -m "Deploy website"
-   git push origin main
+   git push origin master
    ```
 
-3. **查看部署状态**
-   - 在 GitHub 仓库的 "Actions" 标签页查看部署进度
-   - 部署完成后，网站将在 `https://yourusername.github.io/repository-name` 可访问
+2. **启用 Gitee Pages**
+   - 进入 Gitee 仓库页面
+   - 点击 "服务" → "Gitee Pages"
+   - 选择部署分支为 `gh-pages`
+   - 点击 "启动" 或 "更新"
 
-### 方式二：手动部署
+3. **访问网站**
+   - 部署完成后，网站将在 `https://sylviaxiao.gitee.io/xiao-xis-personal-homepage` 可访问
 
-1. **使用 gh-pages 工具**
+### 方式二：手动部署到 Gitee Pages
+
+1. **使用 gh-pages 工具部署**
    ```bash
    # 构建并部署
    npm run build:deploy
@@ -137,25 +137,35 @@ tags:
 
 2. **首次部署设置**
    ```bash
-   # 安装 gh-pages（如果还没安装）
-   npm install -D gh-pages
+   # 确保已连接到 Gitee 仓库
+   git remote add origin https://gitee.com/sylviaxiao/xiao-xis-personal-homepage.git
    
-   # 确保有 gh-pages 分支的推送权限
-   git remote -v
+   # 推送主分支
+   git push -u origin master
    ```
 
-### 方式三：Vercel 部署
+3. **部署后更新 Gitee Pages**
+   - 每次部署后需要手动在 Gitee 页面点击 "更新" 按钮
+   - 或者开通 Gitee Pages Pro 服务实现自动更新
 
-1. 连接 GitHub 仓库到 Vercel
-2. 设置构建命令：`npm run docs:build`
-3. 设置输出目录：`docs/.vitepress/dist`
-4. 部署完成后获得 Vercel 域名
+### 方式三：其他平台部署
+
+1. **Vercel 部署**
+   - 导入 Gitee 仓库到 Vercel
+   - 设置构建命令：`npm run docs:build`
+   - 设置输出目录：`docs/.vitepress/dist`
+
+2. **Netlify 部署**
+   - 连接 Gitee 仓库到 Netlify
+   - 配置构建设置
+   - 自动部署
 
 ### 部署注意事项
 
-- **Base Path**: 如果部署到子路径，需要在 `docs/.vitepress/config.mts` 中设置 `base` 选项
+- **Gitee Pages 限制**: 免费版需要手动更新，Pro 版支持自动更新
+- **分支管理**: 源码在 `master` 分支，构建结果推送到 `gh-pages` 分支
 - **静态资源**: 确保所有图片和资源文件都放在 `docs/public/` 目录下
-- **环境变量**: 生产环境的配置可能需要调整
+- **访问地址**: `https://sylviaxiao.gitee.io/xiao-xis-personal-homepage`
 
 ## 📄 许可证
 

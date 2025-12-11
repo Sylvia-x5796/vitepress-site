@@ -509,7 +509,7 @@ export type { ButtonProps, ButtonInstance } from './components/button'
 
 ## 🔗 相关资源
 
-- [项目源码](https://github.com/example/vue3-ui-library)
+- [项目源码](https://gitee.com/sylviaxiao/vue3-ui-library)
 - [在线文档](https://vue3-ui-library.example.com)
 - [NPM包](https://www.npmjs.com/package/vue3-ui-library)
 

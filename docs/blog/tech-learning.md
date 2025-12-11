@@ -443,6 +443,6 @@ export default defineConfig({
 *如果你有任何学习上的问题或想要交流经验，欢迎在评论区留言或者通过邮箱联系我！*
 
 **相关链接：**
+- [我的Gitee](https://gitee.com/sylviaxiao)
 - [我的GitHub](https://github.com/Sylvia-x5796)
-- [学习笔记仓库](https://github.com/Sylvia-x5796/learning-notes)
-- [练习项目集合](https://github.com/Sylvia-x5796/practice-projects)
+- [个人主页项目](https://gitee.com/sylviaxiao/xiao-xis-personal-homepage)

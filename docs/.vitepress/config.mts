@@ -152,8 +152,8 @@ export default defineConfig({
 
     // 编辑链接
     editLink: {
-      pattern: 'https://github.com/Sylvia-x5796/vitepress-site/edit/main/docs/:path',
-      text: '在 GitHub 上编辑此页'
+      pattern: 'https://gitee.com/sylviaxiao/xiao-xis-personal-homepage/edit/master/docs/:path',
+      text: '在 Gitee 上编辑此页'
     },
 
     // 最后更新时间

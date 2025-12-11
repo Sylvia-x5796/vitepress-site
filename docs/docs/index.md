@@ -34,7 +34,7 @@
 
 1. 📖 查看 [常见问题](./guide/faq.md)
 2. 🔍 使用页面顶部的搜索功能
-3. 💬 在 [GitHub Issues](https://github.com/example/repo/issues) 提问
+3. 💬 在 [Gitee Issues](https://gitee.com/sylviaxiao/xiao-xis-personal-homepage/issues) 提问
 4. 📧 发送邮件到 410676208@qq.com
 
 ---
