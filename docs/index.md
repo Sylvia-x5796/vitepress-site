@@ -107,7 +107,7 @@ features:
 <div class="blog-grid">
   <article class="blog-card">
     <div class="blog-tag">VitePress</div>
-    <h3><a href="/blog/first-post">从零搭建VitePress个人博客</a></h3>
+    <h3><a href="./blog/first-post">从零搭建VitePress个人博客</a></h3>
     <p>完整记录使用VitePress搭建个人技术博客的全过程，包括环境配置、主题定制、部署上线等核心步骤。</p>
     <div class="blog-meta">
       <span class="date">2025-01-15</span>
@@ -117,7 +117,7 @@ features:
   
   <article class="blog-card">
     <div class="blog-tag">Vue3</div>
-    <h3><a href="/blog/project-review">Vue3组件库开发实践</a></h3>
+    <h3><a href="./blog/project-review">Vue3组件库开发实践</a></h3>
     <p>分享Vue3组件库项目的开发经验，包括组件设计、API设计、测试策略和发布流程等方面的思考。</p>
     <div class="blog-meta">
       <span class="date">2025-01-10</span>
@@ -127,7 +127,7 @@ features:
   
   <article class="blog-card">
     <div class="blog-tag">学习</div>
-    <h3><a href="/blog/tech-learning">前端技术学习路径分享</a></h3>
+    <h3><a href="./blog/tech-learning">前端技术学习路径分享</a></h3>
     <p>整理了从零基础到进阶的前端学习路径和资源推荐，希望对初学者有所帮助。</p>
     <div class="blog-meta">
       <span class="date">2025-01-05</span>
@@ -137,7 +137,7 @@ features:
 </div>
 
 <div class="more-posts">
-  <a href="/blog/" class="more-link">查看全部文章 →</a>
+  <a href="./blog/" class="more-link">查看全部文章 →</a>
 </div>
 
 ## 📬 联系我
@@ -206,8 +206,8 @@ features:
 <div class="success-container">
   <p>感谢你来到我的个人站点！我会持续分享前端实战经验和学习心得，期待与你共同成长～</p>
   <div style="margin-top: 1.2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-    <a href="/about" class="btn-primary">了解更多关于我</a>
-    <a href="/blog/" class="btn-secondary">查看全部博客</a>
+    <a href="./about" class="btn-primary">了解更多关于我</a>
+    <a href="./blog/" class="btn-secondary">查看全部博客</a>
   </div>
 </div>
 

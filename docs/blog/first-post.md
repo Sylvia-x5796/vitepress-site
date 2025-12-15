@@ -12,6 +12,14 @@ categories:
 cover: /images/vitepress-blog-cover.png
 ---
 
+---
+title: 从零开始搭建VitePress个人博客：从入门到部署
+description: 完整记录使用VitePress搭建个人技术博客的全过程，包括环境配置、主题定制、部署上线等核心步骤
+date: 2025-01-15
+author: 肖息
+keywords: VitePress, 个人博客, 静态网站, 前端开发
+---
+
 # 从零开始搭建VitePress个人博客：从入门到部署
 
 大家好！今天想和大家分享我使用 VitePress 搭建个人技术博客的全过程。作为一名前端开发者，我尝试过很多博客搭建工具（Hexo、VuePress、Next.js），最终选择 VitePress 是因为它足够轻量、快速，且原生支持 Markdown 和 Vue 组件扩展，非常适合技术博客的需求。

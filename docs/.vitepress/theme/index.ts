@@ -1,24 +1,15 @@
 import DefaultTheme from 'vitepress/theme'
 import './custom.css'
-import type { Theme } from 'vitepress'
+import GiscusComment from './components/GiscusComment.vue'
+import GoogleAnalytics from './components/GoogleAnalytics.vue'
+import Layout from './Layout.vue'
 
-const theme: Theme = {
+export default {
   extends: DefaultTheme,
-  enhanceApp({ app, router, siteData }) {
-    // 全局组件注册
-    // app.component('CustomComponent', CustomComponent)
-    
-    // 路由守卫
-    if (router.onBeforeRouteChange) {
-      router.onBeforeRouteChange = (to) => {
-        // 页面切换时的逻辑
-        console.log('Navigating to:', to)
-      }
-    }
-    
-    // 全局属性
-    app.config.globalProperties.$site = siteData
+  Layout,
+  enhanceApp({ app }) {
+    // 注册全局组件
+    app.component('GiscusComment', GiscusComment)
+    app.component('GoogleAnalytics', GoogleAnalytics)
   }
 }
-
-export default theme

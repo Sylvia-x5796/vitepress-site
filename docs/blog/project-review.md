@@ -12,6 +12,14 @@ categories:
 cover: /images/vue3-component-library.png
 ---
 
+---
+title: 项目复盘：Vue3组件库开发实践
+description: 分享Vue3组件库项目的开发经验，包括组件设计、API设计、测试策略和发布流程等方面的思考
+date: 2025-01-10
+author: 肖息
+keywords: Vue3, 组件库, 项目复盘, 前端开发
+---
+
 # 项目复盘：Vue3组件库开发实践
 
 最近参与了一个Vue3组件库的开发项目，从零开始搭建了一套适用于中后台系统的UI组件库。在这个过程中积累了不少经验，也踩了一些坑，今天想和大家分享一下整个开发过程中的思考和收获。

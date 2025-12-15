@@ -246,7 +246,7 @@ layout: page
 <div class="about-footer">
   <p>感谢你花时间了解我！如果你对我的经历感兴趣，或者想要交流技术问题，欢迎随时联系我。</p>
   <div class="footer-actions">
-    <a href="/blog/" class="btn-primary">查看我的博客</a>
+    <a href="../blog/" class="btn-primary">查看我的博客</a>
     <a href="mailto:410676208@qq.com" class="btn-secondary">发送邮件</a>
   </div>
 </div>

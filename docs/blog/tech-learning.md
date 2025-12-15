@@ -12,6 +12,14 @@ categories:
 cover: /images/frontend-learning-path.png
 ---
 
+---
+title: 前端技术学习路径分享
+description: 整理了从零基础到进阶的前端学习路径和资源推荐，希望对初学者有所帮助
+date: 2025-01-05
+author: 肖息
+keywords: 前端学习, 学习路径, 资源推荐, Web开发
+---
+
 # 前端技术学习路径分享
 
 作为一名正在学习前端开发的大学生，我想分享一下自己的学习路径和一些心得体会。希望能够帮助到同样在前端路上探索的同学们。

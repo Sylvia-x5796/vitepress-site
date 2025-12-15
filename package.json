@@ -5,11 +5,16 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "deploy": "gh-pages -d docs/.vitepress/dist -r https://gitee.com/sylviaxiao/xiao-xis-personal-homepage.git",
+    "deploy": "gh-pages -d docs/.vitepress/dist -r https://gitee.com/sylviaxiao/vite-press_-sylviax.git",
     "build:deploy": "npm run docs:build && npm run deploy"
   },
   "devDependencies": {
+    "feed": "^4.2.2",
     "gh-pages": "^6.3.0",
-    "vitepress": "^0.22.4"
+    "vitepress": "^1.0.0",
+    "vue": "^3.4.0"
+  },
+  "dependencies": {
+    "giscus": "^1.4.0"
   }
 }

@@ -1,45 +1,92 @@
 import { defineConfig } from 'vitepress'
+import { generateRssFeed } from './rss'
 
 export default defineConfig({
   title: '肖息的个人网站',
   description: '肖息的前端技术个人站点 | 专注Web开发、技术分享与学习成长',
   lang: 'zh-CN',
-  base: '/',
+  base: '/vite-press_-sylviax/',
+  
+  // 站点地图
+  sitemap: {
+    hostname: 'https://sylviaxiao.gitee.io/vite-press_-sylviax'
+  },
+  
+  // 清理 URL
+  cleanUrls: true,
+  
+  // 构建钩子 - 生成 RSS
+  buildEnd: async (config) => {
+    await generateRssFeed(config)
+  },
   
   // 网站头部配置
   head: [
     // Favicon 配置
-    ['link', { rel: 'icon', href: '/favicon.ico' }],
-    ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon_io/favicon-32x32.png' }],
-    ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon_io/favicon-16x16.png' }],
-    ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicon_io/apple-touch-icon.png' }],
-    ['link', { rel: 'manifest', href: '/favicon_io/site.webmanifest' }],
+    ['link', { rel: 'icon', href: '/vite-press_-sylviax/favicon.ico' }],
+    ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/vite-press_-sylviax/favicon_io/favicon-32x32.png' }],
+    ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/vite-press_-sylviax/favicon_io/favicon-16x16.png' }],
+    ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/vite-press_-sylviax/favicon_io/apple-touch-icon.png' }],
+    ['link', { rel: 'manifest', href: '/vite-press_-sylviax/favicon_io/site.webmanifest' }],
+    
+    // RSS 订阅
+    ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'RSS Feed', href: '/vite-press_-sylviax/feed.rss' }],
+    ['link', { rel: 'alternate', type: 'application/atom+xml', title: 'Atom Feed', href: '/vite-press_-sylviax/feed.atom' }],
+    ['link', { rel: 'alternate', type: 'application/json', title: 'JSON Feed', href: '/vite-press_-sylviax/feed.json' }],
     
     // Meta 标签
     ['meta', { name: 'author', content: '肖息' }],
-    ['meta', { name: 'keywords', content: 'VitePress,个人网站,前端开发,Vue,JavaScript,肖息' }],
+    ['meta', { name: 'keywords', content: 'VitePress,个人网站,前端开发,Vue,JavaScript,TypeScript,Web开发,技术博客,肖息' }],
+    
+    // Open Graph
     ['meta', { property: 'og:title', content: '肖息的个人网站' }],
     ['meta', { property: 'og:description', content: '肖息的前端技术个人站点，专注Web开发、技术分享与学习成长' }],
     ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:url', content: 'https://sylviaxiao.gitee.io/vite-press_-sylviax/' }],
+    ['meta', { property: 'og:image', content: 'https://sylviaxiao.gitee.io/vite-press_-sylviax/logo.png' }],
+    ['meta', { property: 'og:locale', content: 'zh_CN' }],
+    
+    // Twitter Card
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:title', content: '肖息的个人网站' }],
+    ['meta', { name: 'twitter:description', content: '肖息的前端技术个人站点，专注Web开发、技术分享与学习成长' }],
+    ['meta', { name: 'twitter:image', content: 'https://sylviaxiao.gitee.io/vite-press_-sylviax/logo.png' }],
+    
+    // 其他
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }],
-    ['meta', { name: 'theme-color', content: '#3b82f6' }]
+    ['meta', { name: 'theme-color', content: '#3498db' }],
+    ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
+    ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
+    
+    // 性能优化 - DNS 预解析
+    ['link', { rel: 'dns-prefetch', href: 'https://fonts.googleapis.com' }],
+    ['link', { rel: 'dns-prefetch', href: 'https://giscus.app' }],
+    ['link', { rel: 'dns-prefetch', href: 'https://www.googletagmanager.com' }]
   ],
 
   // Markdown 配置
   markdown: {
     lineNumbers: false,
-    html: true, // 允许在Markdown中使用HTML
     theme: {
       light: 'github-light',
       dark: 'github-dark'
-    },
-    container: {
-      tipLabel: '提示',
-      warningLabel: '警告',
-      dangerLabel: '危险',
-      infoLabel: '信息',
-      detailsLabel: '详细信息'
     }
+  },
+
+  // 多语言支持（可选，暂时只配置中文）
+  locales: {
+    root: {
+      label: '简体中文',
+      lang: 'zh-CN'
+    }
+    // 如需添加英文版本，取消注释：
+    // en: {
+    //   label: 'English',
+    //   lang: 'en-US',
+    //   link: '/en/',
+    //   title: "Xiao Xi's Website",
+    //   description: 'Personal tech blog focused on Web development'
+    // }
   },
 
   themeConfig: {
@@ -150,11 +197,11 @@ export default defineConfig({
       }
     },
 
-    // 编辑链接
-    editLink: {
-      pattern: 'https://gitee.com/sylviaxiao/xiao-xis-personal-homepage/edit/master/docs/:path',
-      text: '在 Gitee 上编辑此页'
-    },
+    // 编辑链接（本地项目已禁用）
+    // editLink: {
+    //   pattern: 'https://gitee.com/sylviaxiao/xiao-xis-personal-homepage/edit/master/docs/:path',
+    //   text: '在 Gitee 上编辑此页'
+    // },
 
     // 最后更新时间
     lastUpdated: {
@@ -192,20 +239,11 @@ export default defineConfig({
     externalLinkIcon: true
   },
 
-  // 构建配置
-  build: {
-    rollupOptions: {
-      output: {
-        chunkFileNames: 'assets/js/[name]-[hash].js',
-        entryFileNames: 'assets/js/[name]-[hash].js',
-        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]'
-      }
+  // Vite 配置
+  vite: {
+    server: {
+      port: 5173,
+      open: true
     }
-  },
-
-  // 开发服务器配置
-  server: {
-    port: 5173,
-    open: true
   }
 })
