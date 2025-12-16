@@ -1,23 +1,33 @@
 name: Deploy to GitHub Pages
 on:
   push:
-    branches: [master] # 匹配你的实际分支
+    branches: [master]
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: 拉取 master 分支代码
+      - name: 拉取master分支代码
         uses: actions/checkout@v4
-      - name: 安装 Node.js
+      
+      # 新增：配置Git身份（解决推送时的身份验证问题）
+      - name: 配置Git用户名和邮箱
+        run: |
+          git config --global user.name "你的GitHub用户名"
+          git config --global user.email "你的GitHub绑定邮箱"
+      
+      - name: 安装Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+      
       - name: 安装依赖并打包
         run: |
           npm install
-          npm run build # VitePress默认打包命令
-      - name: 部署到 GitHub Pages
+          npm run build # 确保package.json中该命令对应VitePress的打包
+      
+      - name: 部署到GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/.vitepress/dist # VitePress默认输出目录
+          publish_dir: ./docs/.vitepress/dist # VitePress默认打包目录
+          force: true # 新增：强制创建/覆盖gh-pages分支（首次推送必备）
