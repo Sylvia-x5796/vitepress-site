@@ -15,9 +15,9 @@ const loadGiscus = () => {
   const script = document.createElement('script')
   script.src = 'https://giscus.app/client.js'
   script.setAttribute('data-repo', 'Sylvia-x5796/vitepress-comments') // 替换为你的 GitHub 仓库
-  script.setAttribute('data-repo-id', 'YOUR_REPO_ID') // 需要配置
+  script.setAttribute('data-repo-id', 'R_kgDOQpIWUA') // 需要配置
   script.setAttribute('data-category', 'Announcements')
-  script.setAttribute('data-category-id', 'YOUR_CATEGORY_ID') // 需要配置
+  script.setAttribute('data-category-id', 'DIC_kwDOQpIWUM4Cz0oN') // 需要配置
   script.setAttribute('data-mapping', 'pathname')
   script.setAttribute('data-strict', '0')
   script.setAttribute('data-reactions-enabled', '1')
