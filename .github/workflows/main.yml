@@ -35,9 +35,9 @@ jobs:
       - name: 安装项目依赖
         run: npm install
 
-      # 步骤5：执行打包命令（VitePress 打包）
+      # 步骤5：执行打包命令（VitePress 专用打包命令）
       - name: 打包 VitePress 站点
-        run: npm run build # 若你的打包命令是 npm run docs:build，替换成这个
+        run: npm run docs:build # VitePress 默认打包脚本，已修正
 
       # 步骤6：检查打包目录（验证是否生成静态文件，方便排错）
       - name: 检查打包文件是否生成
