@@ -1,15 +1,19 @@
 import { defineConfig } from 'vitepress'
 import { generateRssFeed } from './rss'
 
+// 根据环境变量决定 base 路径
+const base = process.env.VITE_BASE_PATH || '/vite-press_-sylviax/'
+const hostname = process.env.VITE_HOSTNAME || 'https://sylviaxiao.gitee.io/vite-press_-sylviax'
+
 export default defineConfig({
   title: '肖息的个人网站',
   description: '肖息的前端技术个人站点 | 专注Web开发、技术分享与学习成长',
   lang: 'zh-CN',
-  base: '/vite-press_-sylviax/',
+  base,
   
   // 站点地图
   sitemap: {
-    hostname: 'https://sylviaxiao.gitee.io/vite-press_-sylviax'
+    hostname
   },
   
   // 清理 URL

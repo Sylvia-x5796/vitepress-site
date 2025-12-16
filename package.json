@@ -4,7 +4,7 @@
   "scripts": {
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:build:github": "vitepress build docs --config docs/.vitepress/config.github.mts",
+    "docs:build:github": "cross-env VITE_BASE_PATH=/vitepress-site/ VITE_HOSTNAME=https://sylvia-x5796.github.io/vitepress-site vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "deploy:gitee": "gh-pages -d docs/.vitepress/dist -r https://gitee.com/sylviaxiao/vite-press_-sylviax.git",
     "deploy:github": "gh-pages -d docs/.vitepress/dist -r https://github.com/Sylvia-x5796/vitepress-site.git",
@@ -12,6 +12,7 @@
     "build:deploy:github": "npm run docs:build:github && npm run deploy:github"
   },
   "devDependencies": {
+    "cross-env": "^10.1.0",
     "feed": "^4.2.2",
     "gh-pages": "^6.3.0",
     "vitepress": "^1.0.0",
